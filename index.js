@@ -1,4 +1,4 @@
-var atob = require('atob');
+var atob = require("atob");
 
 /**
  * Unescape special characters in the given string of html.
@@ -6,7 +6,7 @@ var atob = require('atob');
  * @param  {String} key
  * @module OpenSSLKey
  */
-function OpenSSLKey(key) {
+var OpenSSLKey = function (key) {
   this.key = key;
   this.rawkey = key.split(" ")[1];
   this.keyType = key.split(" ")[0];
@@ -24,11 +24,11 @@ function OpenSSLKey(key) {
  * @private
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype._load = function() {
+OpenSSLKey.prototype._load = function () {
   var loadingArray = this.byteArray,
-      length, capture;
+    length, capture;
 
-  while(loadingArray.length > 0){
+  while (loadingArray.length > 0) {
     length = loadingArray.slice(0, this.wordLength);
     capture = loadingArray.slice(this.wordLength, this._byteArrayToLong(length) + this.wordLength);
     this.slicedArray.push(capture);
@@ -36,9 +36,9 @@ OpenSSLKey.prototype._load = function() {
     loadingArray = loadingArray.slice(this._byteArrayToLong(length) + this.wordLength);
   }
 
-  if(this.keyType == "ssh-rsa"){
+  if (this.keyType === "ssh-rsa") {
     this.modulusLength = this.getSlicedByteArray()[2].length * 8 - 8;
-  } else if(this.keyType == "ssh-dss" || this.keyType == "ssh-dsa"){
+  } else if (this.keyType === "ssh-dss" || this.keyType === "ssh-dsa") {
     this.modulusLength = this.getSlicedByteArray()[1].length * 8 - 8;
   }
 };
@@ -49,7 +49,7 @@ OpenSSLKey.prototype._load = function() {
  * @return {String}
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype.getString = function() {
+OpenSSLKey.prototype.getString = function () {
   return this.rawkey;
 };
 
@@ -59,7 +59,7 @@ OpenSSLKey.prototype.getString = function() {
  * @return {Number|Array}
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype.getByteArray = function() {
+OpenSSLKey.prototype.getByteArray = function () {
   return this.byteArray;
 };
 
@@ -69,7 +69,7 @@ OpenSSLKey.prototype.getByteArray = function() {
  * @return {Number|Array|Array}
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype.getSlicedByteArray = function() {
+OpenSSLKey.prototype.getSlicedByteArray = function () {
   return this.slicedArray;
 };
 
@@ -79,7 +79,7 @@ OpenSSLKey.prototype.getSlicedByteArray = function() {
  * @return {Number}
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype.getKeyLength = function() {
+OpenSSLKey.prototype.getKeyLength = function () {
   return this.modulusLength;
 };
 
@@ -89,7 +89,7 @@ OpenSSLKey.prototype.getKeyLength = function() {
  * @return {String}
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype.getKeyType = function() {
+OpenSSLKey.prototype.getKeyType = function () {
   return this.keyType;
 };
 
@@ -101,20 +101,23 @@ OpenSSLKey.prototype.getKeyType = function() {
  * @module OpenSSLKey
  * @private
  */
-OpenSSLKey.prototype._stringToBytes = function(str) {
-  var character, stack, byteArray = [];
-  for (var i = 0; i < str.length; i++ ) {
+OpenSSLKey.prototype._stringToBytes = function (str) {
+  var character,
+      stack,
+      byteArray = [],
+      i;
+  for (i = 0; i < str.length; i++) {
     character = str.charCodeAt(i);
     stack = [];
     do {
       stack.push(character & 0xFF);
-      character = character >> 8;
+      character >>= 8;
     }
     while (character);
     byteArray = byteArray.concat(stack.reverse());
   }
   return byteArray;
-}
+};
 
 /**
  * Returns a string representation of a byte array
@@ -124,13 +127,14 @@ OpenSSLKey.prototype._stringToBytes = function(str) {
  * @module OpenSSLKey
  * @private
  */
-OpenSSLKey.prototype._bytesToString = function(array) {
-  var result = "";
-  for (var i = 0; i < array.length; i++) {
+OpenSSLKey.prototype._bytesToString = function (array) {
+  var result = "",
+      i;
+  for (i = 0; i < array.length; i++) {
     result += String.fromCharCode(parseInt(array[i]));
   }
   return result;
-}
+};
 
 /**
  * Returns an array of bytes that represet a string
@@ -140,12 +144,13 @@ OpenSSLKey.prototype._bytesToString = function(array) {
  * @module OpenSSLKey
  * @private
  */
-OpenSSLKey.prototype._byteArrayToLong = function(byteArray) {
-    var value = 0;
-    for (var i = 0; i < byteArray.length; i++) {
-        value = (value * 256) + byteArray[i];
-    }
-    return value;
-}
+OpenSSLKey.prototype._byteArrayToLong = function (byteArray) {
+  var value = 0,
+      i;
+  for (i = 0; i < byteArray.length; i++) {
+    value = (value * 256) + byteArray[i];
+  }
+  return value;
+};
 
 module.exports = OpenSSLKey;
