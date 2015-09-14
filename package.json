@@ -1,0 +1,35 @@
+{
+  "name": "openssh-rsa-dsa-parse",
+  "version": "1.0.0",
+  "description": "A small node.js modules to parse OpenSSL public RSA and DSA SSH keys into their type, exponent, and modulus",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jkingsman/openssh-rsa-dsa-parse.git"
+  },
+  "keywords": [
+    "openssh",
+    "ssh",
+    "key",
+    "rsa",
+    "dsa",
+    "parse"
+  ],
+  "author": "Jack Kingsman <jack.kingsman@gmail.com> (http://jacksbrain.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkingsman/openssh-rsa-dsa-parse/issues"
+  },
+  "homepage": "https://github.com/jkingsman/openssh-rsa-dsa-parse",
+  "dependencies": {
+    "atob": "^1.1.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-mocha": "^2.1.3",
+    "mocha": "^2.3.2"
+  }
+}

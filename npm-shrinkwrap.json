@@ -1,0 +1,11 @@
+{
+  "name": "openssh-rsa-dsa-parse",
+  "version": "1.0.0",
+  "dependencies": {
+    "atob": {
+      "version": "1.1.2",
+      "from": "atob@*",
+      "resolved": "https://registry.npmjs.org/atob/-/atob-1.1.2.tgz"
+    }
+  }
+}
