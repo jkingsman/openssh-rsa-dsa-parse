@@ -1,15 +1,20 @@
 var atob = require("atob");
 
 /**
- * Unescape special characters in the given string of html.
+ * Simple, fast parsing of OpenSSH RSA and DSA keys to programmatically access key type, length, and and multiple key formats
  *
  * @param  {String} key
  * @module OpenSSLKey
  */
 var OpenSSLKey = function (key) {
   this.key = key;
-  this.rawkey = key.split(" ")[1];
   this.keyType = key.split(" ")[0];
+  this.rawkey = key.split(" ")[1];
+  try{
+    this.keyComment = key.split(" ")[2];
+  } catch(err){
+    this.keyComment = null;
+  }
 
   this.byteArray = this._stringToBytes(atob(this.rawkey));
   this.slicedArray = [];
@@ -44,33 +49,33 @@ OpenSSLKey.prototype._load = function () {
 };
 
 /**
- * Return the key as a string
+ * Return the original input as a string
  *
  * @return {String}
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype.getString = function () {
+OpenSSLKey.prototype.getKey = function () {
+  return this.key;
+};
+
+/**
+ * Return the key type as a string
+ *
+ * @return {String}
+ * @module OpenSSLKey
+ */
+OpenSSLKey.prototype.getKeyType = function () {
+  return this.keyType;
+};
+
+/**
+ * Return the key data as a string
+ *
+ * @return {String}
+ * @module OpenSSLKey
+ */
+OpenSSLKey.prototype.getData = function () {
   return this.rawkey;
-};
-
-/**
- * Return the key as an array of bytes
- *
- * @return {Number|Array}
- * @module OpenSSLKey
- */
-OpenSSLKey.prototype.getByteArray = function () {
-  return this.byteArray;
-};
-
-/**
- * Return the sliced key as an array of arrays of bytes
- *
- * @return {Number|Array|Array}
- * @module OpenSSLKey
- */
-OpenSSLKey.prototype.getSlicedByteArray = function () {
-  return this.slicedArray;
 };
 
 /**
@@ -84,13 +89,33 @@ OpenSSLKey.prototype.getKeyLength = function () {
 };
 
 /**
- * Return the key ype as a string
+ * Return the key's comment, if it has one
  *
- * @return {String}
+ * @return {String|Null}
  * @module OpenSSLKey
  */
-OpenSSLKey.prototype.getKeyType = function () {
-  return this.keyType;
+OpenSSLKey.prototype.getComment = function () {
+  return this.keyComment;
+};
+
+/**
+ * Return the key as an array of bytes
+ *
+ * @return {Number|Array}
+ * @module OpenSSLKey
+ */
+OpenSSLKey.prototype.getByteArray = function () {
+  return this.byteArray;
+};
+
+/**
+ * Return the sliced key as an array of arrays of bytes, broken on data boundaries
+ *
+ * @return {Number|Array|Array}
+ * @module OpenSSLKey
+ */
+OpenSSLKey.prototype.getSlicedByteArray = function () {
+  return this.slicedArray;
 };
 
 /**

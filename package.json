@@ -1,7 +1,7 @@
 {
   "name": "openssh-rsa-dsa-parse",
   "version": "1.0.0",
-  "description": "A small node.js modules to parse OpenSSL public RSA and DSA SSH keys into their type, exponent, and modulus",
+  "description": "Simple, fast parsing of OpenSSH RSA and DSA keys to programmatically access key type, length, and and multiple key formats",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/gulp"

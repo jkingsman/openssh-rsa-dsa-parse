@@ -3,17 +3,17 @@ var assert = require('assert'),
 
 describe('opensslParse', function() {
   describe('RSATests', function () {
-    var key = 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAnQQg+9yF125mdeVg9Q72E2KI1zyYYs8CeeEAJtUoyAjCfxRLMhIhV3JzJAtCwa0+x74mTwfHJiWsUhua1rmRusKno2nxKDEkuc6E6McqixJCyKiZyIJ6LBHniKaIZkCOobeMVfak58FJJ5WFGbNITxWzF/39esv066C9WjrZ/XM=  rsa-key-test';
+    var key = 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAnQQg+9yF125mdeVg9Q72E2KI1zyYYs8CeeEAJtUoyAjCfxRLMhIhV3JzJAtCwa0+x74mTwfHJiWsUhua1rmRusKno2nxKDEkuc6E6McqixJCyKiZyIJ6LBHniKaIZkCOobeMVfak58FJJ5WFGbNITxWzF/39esv066C9WjrZ/XM= rsa-key-test';
     var rawKey = 'AAAAB3NzaC1yc2EAAAABJQAAAIEAnQQg+9yF125mdeVg9Q72E2KI1zyYYs8CeeEAJtUoyAjCfxRLMhIhV3JzJAtCwa0+x74mTwfHJiWsUhua1rmRusKno2nxKDEkuc6E6McqixJCyKiZyIJ6LBHniKaIZkCOobeMVfak58FJJ5WFGbNITxWzF/39esv066C9WjrZ/XM=';
     var concatByteArray = '000711511510445114115970001370001290157432251220133215110102117229962451424619981362156015298207212122503821340200819412720755018338711411536116619317362199190387971993837172822715421418514518619416716310524140493618520613223219942139186620016815320013012244172311361661361026414216118314085246164231193733914913325179727921179232532531222032442351601899058217253115'
     var testKey = new opensslParse(key);
 
     it('loads the key into byte array', function () {
-      assert.equal(key, testKey.key);
+      assert.equal(key, testKey.getKey());
     });
 
     it('returns the raw key', function () {
-      assert.equal(rawKey, testKey.getString());
+      assert.equal(rawKey, testKey.getData());
     });
 
     it('returns the byte array', function () {
@@ -28,6 +28,10 @@ describe('opensslParse', function() {
     it('returns the key length', function () {
       assert.equal('1024', testKey.getKeyLength());
     });
+
+    it('returns the comment', function () {
+      assert.equal('rsa-key-test', testKey.getComment());
+    });
   });
 
   describe('DSATests', function () {
@@ -37,11 +41,11 @@ describe('opensslParse', function() {
     var testKey = new opensslParse(key);
 
     it('loads the key into byte array', function () {
-      assert.equal(key, testKey.key);
+      assert.equal(key, testKey.getKey());
     });
 
     it('returns the raw key', function () {
-      assert.equal(rawKey, testKey.getString());
+      assert.equal(rawKey, testKey.getData());
     });
 
     it('returns the byte array', function () {
@@ -55,6 +59,19 @@ describe('opensslParse', function() {
 
     it('returns the key length', function () {
       assert.equal('1024', testKey.getKeyLength());
+    });
+
+    it('returns the comment', function () {
+      assert.equal('dsa-key-test', testKey.getComment());
+    });
+  });
+
+  describe('Comment Failover', function () {
+    var key = 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAnQQg+9yF125mdeVg9Q72E2KI1zyYYs8CeeEAJtUoyAjCfxRLMhIhV3JzJAtCwa0+x74mTwfHJiWsUhua1rmRusKno2nxKDEkuc6E6McqixJCyKiZyIJ6LBHniKaIZkCOobeMVfak58FJJ5WFGbNITxWzF/39esv066C9WjrZ/XM=';
+    var testKey = new opensslParse(key);
+
+    it('returns null without a comment', function () {
+      assert.equal(null, testKey.getComment());
     });
   });
 });
