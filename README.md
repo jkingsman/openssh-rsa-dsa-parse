@@ -17,7 +17,7 @@ var open-ssh-parser = require('openssh-rsa-dsa-parse');
 Then load a key...
 
 ```javascript
-var newKey = new open-ssh-parser('ssh-rsa AAAAB3NzaC1yc2EAAAABJ[]...]');
+var newKey = new open-ssh-parser('ssh-rsa AAAAB3NzaC1yc2EAAAABJ[...]');
 ```
 
 ## API
