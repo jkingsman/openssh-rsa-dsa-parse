@@ -8,6 +8,8 @@ Simple, fast parsing of OpenSSH RSA and DSA keys to programmatically access key 
 npm install openssh-rsa-dsa-parse
 ```
 
+Load the module...
+
 ```javascript
 var open-ssh-parser = require('openssh-rsa-dsa-parse');
 ```
