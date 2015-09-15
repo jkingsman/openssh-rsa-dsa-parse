@@ -11,13 +11,13 @@ npm install openssh-rsa-dsa-parse
 Load the module...
 
 ```javascript
-var open-ssh-parser = require('openssh-rsa-dsa-parse');
+var opensshparser = require('openssh-rsa-dsa-parse');
 ```
 
 Then load a key...
 
 ```javascript
-var newKey = new open-ssh-parser('ssh-rsa AAAAB3NzaC1yc2EAAAABJ[...]');
+var newKey = new opensshparser('ssh-rsa AAAAB3NzaC1yc2EAAAABJ[...]');
 ```
 
 ## API
