@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/openssh-rsa-dsa-parse.png)](https://nodei.co/npm/openssh-rsa-dsa-parse/)
+
 # openssh-rsa-dsa-parse
 
 Simple, fast parsing of OpenSSH RSA and DSA keys to programmatically access key type, length, and and multiple key formats.
