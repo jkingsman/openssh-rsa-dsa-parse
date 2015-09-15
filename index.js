@@ -45,6 +45,8 @@ OpenSSLKey.prototype._load = function () {
     this.modulusLength = this.getSlicedByteArray()[2].length * 8 - 8;
   } else if (this.keyType === "ssh-dss" || this.keyType === "ssh-dsa") {
     this.modulusLength = this.getSlicedByteArray()[1].length * 8 - 8;
+  } else{
+    this.modulusLength = null;
   }
 };
 
